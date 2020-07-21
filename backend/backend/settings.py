@@ -23,9 +23,11 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 SECRET_KEY = 'e*0=a(=xx*!9z^7m2(urrok)z#cibxy3*e$kr*n_te#yn%g@@('
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = False
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = [
+    "timbrook.dev"
+]
 
 
 # Application definition

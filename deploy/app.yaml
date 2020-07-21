@@ -1,0 +1,32 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: personal-site-prerelease 
+  labels:
+    app: personal-site-prerelease
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: personal-site-prerelease 
+  template:
+    metadata:
+      labels:
+        app: personal-site-prerelease
+      annotations:
+        consul.hashicorp.com/connect-service: site
+        consul.hashicorp.com/connect-inject: 'true'
+        consul.hashicorp.com/connect-service-protocol: 'http'
+    spec:
+      containers:
+        - name: app
+          image: 7imbrook/site@sha256:5cf9e6dc6bdb049384bea0d374d4378841b3c2f8e3b28a123e3d1e9dd170ea1d
+          command:
+            - daphne
+            - -b
+            - "0.0.0.0"
+            - -p
+            - "8001"
+            - backend.asgi:application
+          ports:
+            - containerPort: 8001
