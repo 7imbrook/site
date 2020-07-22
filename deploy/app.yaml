@@ -17,7 +17,7 @@ spec:
         consul.hashicorp.com/connect-service: site
         consul.hashicorp.com/connect-inject: "true"
         consul.hashicorp.com/connect-service-protocol: "http"
-        consul.hashicorp.com/service-meta-sha: ffa876b1126e96ebe72bb4106ec5c37c3cc3697d17d94c1d0d5f15eae6e0342b
+        consul.hashicorp.com/service-meta-sha: 0eaecf1
     spec:
       affinity:
         podAntiAffinity:
@@ -28,7 +28,7 @@ spec:
                   app: personal-site-prerelease
       containers:
         - name: app
-          image: 7imbrook/site@sha256:ffa876b1126e96ebe72bb4106ec5c37c3cc3697d17d94c1d0d5f15eae6e0342b
+          image: 7imbrook/site:sha-0eaecf1
           command:
             - daphne
             - -b
