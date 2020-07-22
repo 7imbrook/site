@@ -1,3 +1,7 @@
 from django.test import TestCase
 
-# Create your tests here.
+class EverythingIsOkTest(TestCase):
+
+    def test_the_tests_of_testing(self):
+        self.assertTrue(True, "True isn't true????")
+
