@@ -1,26 +1,34 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: personal-site-prerelease 
+  name: personal-site-prerelease
   labels:
     app: personal-site-prerelease
 spec:
-  replicas: 1
+  replicas: 5
   selector:
     matchLabels:
-      app: personal-site-prerelease 
+      app: personal-site-prerelease
   template:
     metadata:
       labels:
         app: personal-site-prerelease
       annotations:
         consul.hashicorp.com/connect-service: site
-        consul.hashicorp.com/connect-inject: 'true'
-        consul.hashicorp.com/connect-service-protocol: 'http'
+        consul.hashicorp.com/connect-inject: "true"
+        consul.hashicorp.com/connect-service-protocol: "http"
+        consul.hashicorp.com/service-meta-sha: ffa876b1126e96ebe72bb4106ec5c37c3cc3697d17d94c1d0d5f15eae6e0342b
     spec:
+      affinity:
+        podAntiAffinity:
+          requiredDuringSchedulingIgnoredDuringExecution:
+            - topologyKey: kubernetes.io/hostname
+              labelSelector:
+                matchLabels:
+                  app: personal-site-prerelease
       containers:
         - name: app
-          image: 7imbrook/site@sha256:0daa12a3260e40b6bc8f29e675fd4531daafaeb7eca8f969f389fa3395fd48b7
+          image: 7imbrook/site@sha256:ffa876b1126e96ebe72bb4106ec5c37c3cc3697d17d94c1d0d5f15eae6e0342b
           command:
             - daphne
             - -b
@@ -30,3 +38,18 @@ spec:
             - backend.asgi:application
           ports:
             - containerPort: 8001
+          env:
+            - name: HOST_IP
+              valueFrom:
+                fieldRef:
+                  apiVersion: v1
+                  fieldPath: status.hostIP
+            - name: CONSUL_HTTP_ADDR
+              value: $(HOST_IP):8500
+          resources:
+            limits:
+              cpu: 50m
+              memory: 100Mi
+            requests:
+              cpu: 50m
+              memory: 100Mi

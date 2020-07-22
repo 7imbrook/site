@@ -8,5 +8,6 @@ def home(request):
     return render(request, 'home/home.html', {
         'is_prod': settings.PROD,
         'is_prerelease': settings.PRERELEASE,
-        'hostname': socket.gethostname()
+        'hostname': socket.gethostname(),
+        'consul_host': settings.CONSUL_ADDR,
     })

@@ -78,6 +78,7 @@ AUTH_PASSWORD_VALIDATORS = [
     },
 ]
 
+CONSUL_ADDR = os.environ.get("CONSUL_HTTP_ADDR", "127.0.0.1:8500")
 
 # Internationalization
 # https://docs.djangoproject.com/en/3.0/topics/i18n/
