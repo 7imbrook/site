@@ -1,4 +1,4 @@
 Personal Site App
 ===================
 
-That is all.
+![Django CI](https://github.com/7imbrook/site/workflows/Django%20CI/badge.svg)
