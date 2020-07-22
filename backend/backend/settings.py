@@ -9,6 +9,7 @@ https://docs.djangoproject.com/en/3.0/topics/settings/
 For the full list of settings and their values, see
 https://docs.djangoproject.com/en/3.0/ref/settings/
 """
+import os
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/3.0/howto/deployment/checklist/
@@ -103,7 +104,7 @@ env_map = {
 }
 
 try:
-    e = 'dev'
+    e = os.environ.get('RELEASE_STAGE', 'prerelease')
     module = __import__(env_map.get(e), globals(), locals(), ['*'])
     for k in dir(module):
         if not k.startswith('__'): # Exclude from adding to settings
