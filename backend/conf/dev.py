@@ -16,3 +16,5 @@ DATABASES = {
         'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
     }
 }
+
+TESTING_SECRET = os.path.join(BASE_DIR, "../README.md")

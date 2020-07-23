@@ -4,6 +4,7 @@ metadata:
   name: personal-site-prerelease
   labels:
     app: personal-site-prerelease
+  namespace: prerelease
 spec:
   replicas: 5
   selector:
@@ -14,10 +15,16 @@ spec:
       labels:
         app: personal-site-prerelease
       annotations:
+        # Consul consult
         consul.hashicorp.com/connect-service: site
         consul.hashicorp.com/connect-inject: "true"
         consul.hashicorp.com/connect-service-protocol: "http"
         consul.hashicorp.com/service-meta-sha: 0eaecf1
+        # Vault config
+        vault.hashicorp.com/agent-inject: "true"
+        vault.hashicorp.com/role: "site"
+        vault.hashicorp.com/agent-inject-token: "true"
+        vault.hashicorp.com/agent-inject-secret-here: secrets/testing
     spec:
       affinity:
         podAntiAffinity:
@@ -26,6 +33,7 @@ spec:
               labelSelector:
                 matchLabels:
                   app: personal-site-prerelease
+      serviceAccountName: personal-site-django
       containers:
         - name: app
           image: 7imbrook/site:sha-0eaecf1

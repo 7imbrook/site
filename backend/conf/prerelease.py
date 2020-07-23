@@ -6,3 +6,5 @@ PROD = True
 ALLOWED_HOSTS = [
     "timbrook.dev"
 ]
+
+TESTING_SECRET = "/vault/secrets/here"
