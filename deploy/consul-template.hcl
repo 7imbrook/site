@@ -109,7 +109,7 @@ exec {
 }
 
 template {
-  source = "/opt/deploy/tempates/testing.yaml"
+  source = "/opt/deploy/templates/testing.yaml"
   destination = "/opt/config/testing.yaml"
 }
 
