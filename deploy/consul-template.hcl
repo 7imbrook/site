@@ -66,7 +66,7 @@ syslog {
 exec {
   # This is the command to exec as a child process. There can be only one
   # command per Consul Template process.
-  command = "daphne -b 127.0.0.1 -p 8001 backend.asgi:application"
+  command = "sleep 10000"
 
   # This is a random splay to wait before killing the command. The default
   # value is 0 (no wait), but large clusters should consider setting a splay
@@ -109,11 +109,11 @@ exec {
 }
 
 template {
-  source = "/opt/deploy/templates/testing.yaml"
   destination = "/opt/config/testing.yaml"
+  contents = "{{ key \"site/testing/strings\" }}"
 }
 
 template {
-    destination = "/etc/ssl/certs/consulCA.pem"
-    contents = "{{ range caRoots }}{{ .RootCertPEM }}{{ end }}"
+  destination = "/etc/ssl/certs/consulCA.pem"
+  contents = "{{ range caRoots }}{{ .RootCertPEM }}{{ end }}"
 }

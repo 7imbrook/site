@@ -7,4 +7,4 @@ ALLOWED_HOSTS = [
     "timbrook.dev"
 ]
 
-TESTING_SECRET = "/vault/secrets/here"
+TESTING_SECRET = "/opt/config/testing.yaml"
