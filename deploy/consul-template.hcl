@@ -66,7 +66,7 @@ syslog {
 exec {
   # This is the command to exec as a child process. There can be only one
   # command per Consul Template process.
-  command = "sleep 10000"
+  command = "uwsgi --ini ./conf/uwsgi.ini"
 
   # This is a random splay to wait before killing the command. The default
   # value is 0 (no wait), but large clusters should consider setting a splay
