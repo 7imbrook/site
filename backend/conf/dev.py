@@ -17,4 +17,4 @@ DATABASES = {
     }
 }
 
-TESTING_SECRET = os.path.join(BASE_DIR, "../README.md")
+CONNSTR = "Dev mode" 

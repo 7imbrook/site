@@ -1,5 +1,7 @@
 
-CONNSTR = 'Can we import this'
+{{ with secret "secrets/database/sfo2-default" }}
+CONNSTR = '{{ .Data.username }}:{{ .Data.password }}'
+{{ end }}
 
 DATABASES = {
     'default': {
