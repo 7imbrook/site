@@ -119,7 +119,7 @@ template {
 }
 
 template {
-  destination = "/opt/config/dbconnection"
-  contents = "postgresql://"
+  destination = "/app/backend/conf/database.py"
+  source = "/opt/deploy/templates/database.py"
 }
 

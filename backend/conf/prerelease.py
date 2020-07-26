@@ -7,19 +7,4 @@ ALLOWED_HOSTS = [
     "timbrook.dev"
 ]
 
-
-with open("/opt/config/dbconnection") as f:
-    conn_string = f.read()
-
-CONNSTR = conn_string
-
-DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.postgresql_psycopg2',
-        'NAME': 'admin',
-        'USER': '',
-        'PASSWORD': '',
-        'HOST': '',
-        'PORT': '',
-    }
-}
+from backend.conf.database import *
