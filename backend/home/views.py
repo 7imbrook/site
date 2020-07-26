@@ -5,10 +5,6 @@ import socket
 
 
 def home(request):
-
-    with open(settings.TESTING_SECRET) as contents:
-        extra = contents.read()
-
     return render(
         request,
         "home/home.html",
@@ -17,7 +13,7 @@ def home(request):
             "is_prerelease": settings.PRERELEASE,
             "hostname": socket.gethostname(),
             "consul_host": settings.CONSUL_ADDR,
-            "extra": extra,
+            "extra": settings.CONNSTR,
         },
     )
 

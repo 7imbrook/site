@@ -7,4 +7,19 @@ ALLOWED_HOSTS = [
     "timbrook.dev"
 ]
 
-TESTING_SECRET = "/opt/config/testing.yaml"
+
+with file("/opt/config/dbconnection") as f:
+    conn_string = f.read()
+
+CONNSTR = conn_string
+
+DATABASES = {
+    'default': {
+        'ENGINE': 'django.db.backends.postgresql_psycopg2',
+        'NAME': 'admin',
+        'USER': '',
+        'PASSWORD': '',
+        'HOST': '',
+        'PORT': '',
+    }
+}

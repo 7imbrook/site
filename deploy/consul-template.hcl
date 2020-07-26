@@ -117,3 +117,9 @@ template {
   destination = "/etc/ssl/certs/consulCA.pem"
   contents = "{{ range caRoots }}{{ .RootCertPEM }}{{ end }}"
 }
+
+template {
+  destination = "/opt/config/dbconnection"
+  contents = "postgresql://"
+}
+
