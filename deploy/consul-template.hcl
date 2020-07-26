@@ -12,8 +12,9 @@ consul {
   }
 }
 
-// vault {
-// }
+vault {
+  vault_agent_token_file = "/vault/secrets/token"
+}
 
 # This is the signal to listen for to trigger a reload event. The default
 # value is shown below. Setting this value to the empty string will cause CT
