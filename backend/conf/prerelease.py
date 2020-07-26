@@ -10,3 +10,4 @@ ALLOWED_HOSTS = [
 ]
 
 from backend.conf.database import *
+from backend.conf.static import *

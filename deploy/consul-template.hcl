@@ -124,3 +124,9 @@ template {
   source = "/opt/deploy/templates/database.py"
 }
 
+template {
+  destination = "/app/backend/conf/static.py"
+  source = "/opt/deploy/templates/static.py"
+}
+
+
