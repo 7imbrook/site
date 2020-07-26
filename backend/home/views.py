@@ -13,7 +13,6 @@ def home(request):
             "is_prerelease": settings.PRERELEASE,
             "hostname": socket.gethostname(),
             "consul_host": settings.CONSUL_ADDR,
-            "extra": settings.CONNSTR,
         },
     )
 
