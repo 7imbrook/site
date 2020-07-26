@@ -8,7 +8,7 @@ ALLOWED_HOSTS = [
 ]
 
 
-with file("/opt/config/dbconnection") as f:
+with open("/opt/config/dbconnection") as f:
     conn_string = f.read()
 
 CONNSTR = conn_string
