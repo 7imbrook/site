@@ -1,5 +1,7 @@
 
+# Temp
 DEBUG = False
+
 PRERELEASE = True
 PROD = True
 

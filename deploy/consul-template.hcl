@@ -83,7 +83,7 @@ exec {
     # process's environment. By default, the child will have full access to the
     # environment variables of the parent. Setting this to true will send only
     # the values specified in `custom_env` to the child process.
-    pristine = true
+    pristine = false
   }
 
   # This defines the signal that will be sent to the child process when a
