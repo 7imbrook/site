@@ -118,7 +118,9 @@ STATICFILES_DIRS = [
 env_map = {
     'dev': 'conf.dev',
     'prerelease': 'conf.prerelease',
+    'build': 'conf.prerelease',
 }
+
 
 try:
     e = os.environ.get('RELEASE_STAGE', 'prerelease')
