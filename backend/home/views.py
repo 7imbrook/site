@@ -1,3 +1,5 @@
+import socket
+
 from django.shortcuts import render
 from django.http import HttpResponse
 from django.conf import settings
@@ -5,15 +7,7 @@ from utils.react import render_entrypoint
 
 
 def home(request):
-    return render_entrypoint(request, "Home", {
-        "topText": "Hello!",
-        "tagline": {
-            "subthing": "keeps going",
-            "other": [
-                "a", "b", 1234
-            ]
-        }
-    })
+    return render_entrypoint(request, "Home", {})
 
 
 def info(request):
