@@ -3,8 +3,7 @@
   "version": "1.0.0",
   "description": "Site frontend",
   "scripts": {
-    "webpack": "webpack --config ./webpack.config.js --watch",
-    "build": "webpack --config ./webpack.config.js"
+    "webpack": "webpack --config ./webpack.config.js --watch"
   },
   "dependencies": {
     "@babel/core": "^7.10.5",
