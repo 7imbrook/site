@@ -111,8 +111,9 @@ AWS_S3_ENDPOINT_URL = 'https://sfo2.digitaloceanspaces.com'
 
 # Tell the staticfiles app to use S3Boto3 storage when writing the collected static files (when
 # you run `collectstatic`).
-STATICFILES_STORAGE = 'storages.backends.s3boto3.S3Boto3Storage'
-
+STATICFILES_DIRS = [
+   BASE_DIR + '/static' 
+]
 
 env_map = {
     'dev': 'conf.dev',
