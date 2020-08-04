@@ -1,0 +1,62 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    app: personal-site-prerelease
+  name: personal-site-prerelease
+  namespace: prerelease
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: personal-site-prerelease
+  strategy:
+    rollingUpdate:
+      maxSurge: 25%
+      maxUnavailable: 25%
+    type: RollingUpdate
+  template:
+    metadata:
+      annotations:
+        consul.hashicorp.com/connect-inject: "true"
+        consul.hashicorp.com/connect-service: site
+        consul.hashicorp.com/connect-service-port: "4000"
+        consul.hashicorp.com/connect-service-protocol: http
+        consul.hashicorp.com/service-meta-tag: sha-0712353
+        consul.hashicorp.com/service-tags: prerelease
+        vault.hashicorp.com/agent-inject: "true"
+        vault.hashicorp.com/agent-inject-token: "true"
+        vault.hashicorp.com/role: site
+      labels:
+        app: personal-site-prerelease
+    spec:
+      affinity:
+        podAntiAffinity:
+          requiredDuringSchedulingIgnoredDuringExecution:
+            - labelSelector:
+                matchLabels:
+                  app: personal-site-prerelease
+              topologyKey: kubernetes.io/hostname
+      containers:
+        - name: app
+          image: 7imbrook/site:sha-0712353
+          imagePullPolicy: Always
+          env:
+            - name: HOST_IP
+              valueFrom:
+                fieldRef:
+                  apiVersion: v1
+                  fieldPath: status.hostIP
+            - name: CONSUL_HTTP_ADDR
+              value: $(HOST_IP):8500
+            - name: VAULT_ADDR
+              value: http://vault.default.svc:8200
+          resources:
+            limits:
+              cpu: 100m
+              memory: 100Mi
+            requests:
+              cpu: 100m
+              memory: 100Mi
+      serviceAccountName: personal-site-django
+      terminationGracePeriodSeconds: 30
