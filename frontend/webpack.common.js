@@ -20,8 +20,7 @@ module.exports = {
                 test: /\.(jpg)$/,
                 loader: 'file-loader',
                 options: {
-                    // HACK
-                    publicPath: 'https://sfo2.digitaloceanspaces.com/timbrook/static',
+                    publicPath: '/static',
                 },
             },
             {

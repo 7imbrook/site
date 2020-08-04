@@ -3,17 +3,31 @@ import { entrypointLoader } from '../utils/render';
 import ProfileImage from '../static/profile.jpg';
 import { Grid, Row, Col } from 'react-flexbox-grid';
 
-const HomeEntrypoint = (props) => {
+const style = {
+    root: {
+        marginTop: "20vh",
+        fontFamily: "Hack, monospace"
+    },
+    span: {
+        color: "rgb(162 162 175)"
+    },
+    img: {
+        width: "100%"
+
+    }
+}
+
+const HomeEntrypoint = (_props) => {
     return (
-        <div style={{marginTop: "100px"}}>
+        <div style={style.root}>
             <Grid fluid>
                 <Row middle="md" center="md">
-                    <Col md={5}>
-                        <img src={ProfileImage} width="100%" />
+                    <Col md={4}>
+                        <img src={ProfileImage} style={style.img}/>
                     </Col>
                     <Col md={6}>
-                        <h2>timbrook(dot)dev</h2>
-                        <h6>Don't think about it too hard</h6>
+                        <h1>timbrook<span style={style.span}>(dot)</span>dev</h1>
+                        <h5>Don't think about it too hard</h5>
                     </Col>
                 </Row>
             </Grid>
