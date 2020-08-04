@@ -4,6 +4,8 @@ orbs:
   python: circleci/python@0.2.1
   node: circleci/node@3.0.1
   docker: circleci/docker@1.4.0
+  kubernetes: circleci/kubernetes@0.11.1
+  doctl: digitalocean/cli@0.1.1
 
 jobs:
   unit-test:
@@ -59,7 +61,7 @@ jobs:
           root: /tmp/
           paths:
             - digest.txt
-  frontend-push:
+  push-frontend:
     executor: python/default
     steps:
       - checkout
@@ -72,12 +74,42 @@ jobs:
           name: collectstatic
           working_directory: ./backend
           command: ./manage.py collectstatic --no-input
+  deploy-prerelease:
+    machine:
+      image: ubuntu-1604:202004-01
+    steps:
+      - kubernetes/install
+      - doctl/install
+      - doctl/initialize
+      - run: |
+          doctl kubernetes cluster kubeconfig save west-sfo2
+      - attach_workspace:
+          at: ./
+      - run:
+          name: Set Namespace
+          command: kubectl config set-context --current --namespace prerelease
+      - run:
+          name: Patch Prerelease
+          command: kubectl set image deployment/personal-site-prerelease app=$(cat ./digest.txt)
+      - run:
+          name: Wait for Deployment
+          command: kubectl rollout status deployment/personal-site-prerelease
 
 workflows:
-  main:
+  frontend:
+    jobs:
+      - build-frontend
+      - push-frontend:
+          context: S3
+          filters:
+            branches:
+              only:
+                - master
+          requires:
+            - build-frontend
+  backend:
     jobs:
       - unit-test
-      - build-frontend
       - push-image:
           context: Docker Building
           filters:
@@ -86,13 +118,11 @@ workflows:
                 - master
           requires:
             - unit-test
-            - build-frontend
-      - frontend-push:
-          context: S3
+      - deploy-prerelease:
+          context: DigitalOcean
           filters:
             branches:
               only:
                 - master
           requires:
-            - build-frontend
-
+            - push-image 
