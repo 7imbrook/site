@@ -22,6 +22,19 @@ module.exports = {
                 test: /\.(js|jsx)$/,
                 loader: 'babel-loader',
             },
+            {
+                test: /\.(jpg)$/,
+                loader: 'file-loader',
+                options: {
+                    // HACK
+                    publicPath: 'https://sfo2.digitaloceanspaces.com/timbrook/static',
+                },
+            },
+            {
+                test: /\.css$/,
+                loader: 'style-loader!css-loader',
+                include: /flexboxgrid/
+            }
         ],
     },
     plugins: [
