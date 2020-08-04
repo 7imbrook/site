@@ -2,6 +2,7 @@ version: 2.1
 
 orbs:
   python: circleci/python@0.2.1
+  node: circleci/node@3.0.1
 
 jobs:
   unit-test:
@@ -13,15 +14,34 @@ jobs:
       - python/save-cache
       - run:
           working_directory: backend
-          command: ./manage.py test
           name: Test
+          command: ./manage.py test
       - store_test_results:
           path: backend/test-results
       - store_artifacts:
           path: backend/test-results
           destination: backend-tests
+  build-frontend:
+    executor: node/default
+    steps:
+      - checkout
+      - node/install:
+          install-yarn: true
+          node-version: latest
+      - node/install-packages:
+          app-dir: ./frontend
+          override-ci-command: yarn install
+      - run:
+          working_directory: frontend
+          name: Install
+          command: yarn install
+      - run:
+          working_directory: frontend
+          name: Build Assets
+          command: npm run build
 
 workflows:
   main:
     jobs:
       - unit-test
+      - build-frontend

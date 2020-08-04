@@ -10,12 +10,6 @@ module.exports = {
         path: path.resolve(__dirname, '../backend/static'),
         filename: '[name].entrypoint.js'
     },
-    mode: "development",
-    devtool: "inline-source-map",
-    devServer: {
-        contentBase: path.join(__dirname, '../backend/static'),
-        compress: false,
-    },
     module: {
         rules: [
             {
