@@ -40,6 +40,10 @@ jobs:
           working_directory: frontend
           name: Build Assets
           command: npm run build
+      - persist_to_workspace:
+          root: ./backend/
+          paths:
+            - static/*
   push-image:
     executor: docker/docker
     steps:
@@ -48,7 +52,26 @@ jobs:
       - docker/check
       - docker/build:
           image: 7imbrook/site
-
+      - docker/push:
+          digest-path: /tmp/digest.txt
+          image: 7imbrook/site
+      - persist_to_workspace:
+          root: /tmp/
+          paths:
+            - digest.txt
+  frontend-push:
+    executor: python/default
+    steps:
+      - checkout
+      - python/load-cache
+      - python/install-deps
+      - python/save-cache
+      - attach_workspace:
+          at: ./backend/
+      - run:
+          name: collectstatic
+          working_directory: ./backend
+          command: ./manage.py collectstatic --no-input
 
 workflows:
   main:
@@ -64,3 +87,12 @@ workflows:
           requires:
             - unit-test
             - build-frontend
+      - frontend-push:
+          context: S3
+          filters:
+            branches:
+              only:
+                - master
+          requires:
+            - build-frontend
+
