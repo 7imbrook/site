@@ -9,4 +9,16 @@ module.exports = merge(common, {
         contentBase: path.join(__dirname, '../backend/static'),
         compress: false,
     },
+    module: {
+        rules: [
+            {
+                // Handle local file sourcing differently
+                test: /\.(jpg)$/,
+                loader: 'file-loader',
+                options: {
+                    publicPath: '/static',
+                },
+            },
+        ],
+    },
 });

@@ -17,13 +17,6 @@ module.exports = {
                 loader: 'babel-loader',
             },
             {
-                test: /\.(jpg)$/,
-                loader: 'file-loader',
-                options: {
-                    publicPath: '/static',
-                },
-            },
-            {
                 test: /\.css$/,
                 loader: 'style-loader!css-loader',
                 include: /flexboxgrid/
