@@ -3,6 +3,7 @@ version: 2.1
 orbs:
   python: circleci/python@0.2.1
   node: circleci/node@3.0.1
+  docker: circleci/docker@1.4.0
 
 jobs:
   unit-test:
@@ -39,9 +40,27 @@ jobs:
           working_directory: frontend
           name: Build Assets
           command: npm run build
+  push-image:
+    executor: docker/docker
+    steps:
+      - setup_remote_docker
+      - checkout
+      - docker/check
+      - docker/build:
+          image: 7imbrook/site
+
 
 workflows:
   main:
     jobs:
       - unit-test
       - build-frontend
+      - push-image:
+          context: Docker Building
+          filters:
+            branches:
+              only:
+                - master
+          requires:
+            - unit-test
+            - build-frontend
