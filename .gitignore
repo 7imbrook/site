@@ -147,3 +147,4 @@ dmypy.json
 push.log
 frontend/node_modules/
 backend/static/
+backend/test-results/

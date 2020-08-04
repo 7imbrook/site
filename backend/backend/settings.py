@@ -130,3 +130,7 @@ try:
 except Exception as e:
     print("Ohhh no settings are broken")
     print(e)
+
+
+# TBD include only if testing
+from conf.testing import *

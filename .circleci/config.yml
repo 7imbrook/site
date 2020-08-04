@@ -1,0 +1,27 @@
+version: 2.1
+
+orbs:
+  python: circleci/python@0.2.1
+
+jobs:
+  unit-test:
+    executor: python/default
+    steps:
+      - checkout
+      - python/load-cache
+      - python/install-deps
+      - python/save-cache
+      - run:
+          working_directory: backend
+          command: ./manage.py test
+          name: Test
+      - store_test_results:
+          path: backend/test-results
+      - store_artifacts:
+          path: backend/test-results
+          destination: backend-tests
+
+workflows:
+  main:
+    jobs:
+      - unit-test
