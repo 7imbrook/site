@@ -22,7 +22,7 @@ spec:
         consul.hashicorp.com/connect-service: site
         consul.hashicorp.com/connect-service-port: "4000"
         consul.hashicorp.com/connect-service-protocol: http
-        consul.hashicorp.com/service-meta-tag: sha-0712353
+        consul.hashicorp.com/service-meta-tag: sha-8069d87
         consul.hashicorp.com/service-tags: prerelease
         vault.hashicorp.com/agent-inject: "true"
         vault.hashicorp.com/agent-inject-token: "true"
@@ -39,7 +39,7 @@ spec:
               topologyKey: kubernetes.io/hostname
       containers:
         - name: app
-          image: 7imbrook/site:sha-0712353
+          image: 7imbrook/site:sha-8069d87
           imagePullPolicy: Always
           env:
             - name: HOST_IP
