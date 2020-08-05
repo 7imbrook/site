@@ -1,6 +1,6 @@
 
-{{ with secret "secrets/database/sfo2-default" }}
 DATABASES = {
+{{ with secret "secrets/database/sfo2-default" }}
     'default': {
         'ENGINE': 'django.db.backends.postgresql_psycopg2',
         'NAME': 'admin',
@@ -9,5 +9,9 @@ DATABASES = {
         'HOST': '{{ .Data.hostname }}',
         'PORT': '{{ .Data.port }}',
     }
+{{ end }}
 }
+
+{{ with secret "postgrest/creds/site" }}
+# {{ .Data }}
 {{ end }}
