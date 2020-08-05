@@ -11,5 +11,6 @@ def status(request):
     This is the "lookaside" auth from nginx ingress.
     TODO: gate from internal call 
     """
-    print(request.META)
+    for (key, value) in request.META.items():
+        print(key, ' => ', value)
     return Response()
