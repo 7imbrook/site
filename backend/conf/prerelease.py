@@ -9,6 +9,10 @@ ALLOWED_HOSTS = [
     "timbrook.dev"
 ]
 
+# Allow all subdomains to access session from django.
+# used for lookaside auth from nginx for things like vault and consul
+SESSION_COOKIE_DOMAIN = ".timbrook.dev"
+
 AWS_LOCATION = 'static'
 AWS_STORAGE_BUCKET_NAME = 'timbrook'
 AWS_S3_REGION_NAME = 'sfo2'
