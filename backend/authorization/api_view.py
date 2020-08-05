@@ -11,6 +11,7 @@ def status(request):
     This is the "lookaside" auth from nginx ingress.
     TODO: gate from internal call 
     """
-    for (key, value) in request.META.items():
-        print(key, ' => ', value)
+    ref = request.META.get("HTTP_REFERER")
+    # Probably not safe to trust
+    print(ref)
     return Response()

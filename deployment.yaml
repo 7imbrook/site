@@ -6,15 +6,15 @@ metadata:
   name: personal-site-prerelease
   namespace: prerelease
 spec:
-  replicas: 3
+  replicas: 1
   selector:
     matchLabels:
       app: personal-site-prerelease
   strategy:
+    type: RollingUpdate
     rollingUpdate:
       maxSurge: 25%
       maxUnavailable: 25%
-    type: RollingUpdate
   template:
     metadata:
       annotations:
@@ -22,8 +22,8 @@ spec:
         consul.hashicorp.com/connect-service: site
         consul.hashicorp.com/connect-service-port: "4000"
         consul.hashicorp.com/connect-service-protocol: http
-        consul.hashicorp.com/service-meta-tag: sha-8069d87
         consul.hashicorp.com/service-tags: prerelease
+        # Value Init
         vault.hashicorp.com/agent-inject: "true"
         vault.hashicorp.com/agent-inject-token: "true"
         vault.hashicorp.com/role: site
@@ -39,8 +39,13 @@ spec:
               topologyKey: kubernetes.io/hostname
       containers:
         - name: app
-          image: 7imbrook/site:sha-8069d87
-          imagePullPolicy: Always
+          image: 7imbrook/site@sha256:54a471e5c0091c38fb2c98a12d430cf0b4f86ece5c8be2b9742e7e1f535e4aea
+          livenessProbe:
+            httpGet:
+              path: /
+              port: 4000
+            initialDelaySeconds: 3
+            periodSeconds: 3
           env:
             - name: HOST_IP
               valueFrom:
