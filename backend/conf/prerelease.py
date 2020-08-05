@@ -16,6 +16,7 @@ SESSION_COOKIE_DOMAIN = ".timbrook.dev"
 AWS_LOCATION = 'static'
 AWS_STORAGE_BUCKET_NAME = 'timbrook'
 AWS_S3_REGION_NAME = 'sfo2'
+AWS_DEFAULT_ACL = None
 
 # Tell django-storages the domain to use to refer to static files.
 AWS_S3_ENDPOINT_URL = 'https://sfo2.digitaloceanspaces.com'
