@@ -12,6 +12,6 @@ DATABASES = {
 {{ end }}
 }
 
-{{ with secret "postgrest/creds/site" }}
+{{ with secret "postgres/creds/site" }}
 # {{ .Data }}
 {{ end }}
