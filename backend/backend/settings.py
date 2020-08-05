@@ -135,3 +135,11 @@ except Exception as e:
 
 # TBD include only if testing
 from conf.testing import *
+
+LOGGING = {
+    'version': 1,
+    'disable_existing_loggers': False,
+    'loggers': {
+    },
+}
+
