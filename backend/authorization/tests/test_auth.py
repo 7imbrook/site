@@ -13,15 +13,23 @@ class TestLookasideAuth(TestCase):
         )
 
     def testLoggedInUser(self):
-
         user = User.objects.create_superuser(
             username="michael", email="test@example.com", password="123"
         )
         client = Client()
         client.login(username=user.username, password="123")
-
         res = client.get("/api/auth/status/")
         self.assertEqual(
             res.status_code, 200, "Super user was unable to pass auth test"
+        )
+    
+    def testValidVaultTokenInHeader(self):
+        client = Client()
+        headers = {
+            "HTTP_X_VAULT_TOKEN": "token"
+        }
+        res = client.get("/api/auth/status/", **headers)
+        self.assertEqual(
+            res.status_code, 200, "Vault token didn't bypass"
         )
 

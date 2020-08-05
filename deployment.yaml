@@ -58,10 +58,10 @@ spec:
               value: http://vault.default.svc:8200
           resources:
             limits:
-              cpu: 100m
-              memory: 100Mi
+              cpu: 200m
+              memory: 200Mi
             requests:
-              cpu: 100m
+              cpu: 150m
               memory: 100Mi
       serviceAccountName: personal-site-django
       terminationGracePeriodSeconds: 30
