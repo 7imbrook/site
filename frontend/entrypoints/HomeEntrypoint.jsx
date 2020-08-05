@@ -2,6 +2,8 @@ import React from 'react';
 import { entrypointLoader } from '../utils/render';
 import ProfileImage from '../static/profile.jpg';
 import { Grid, Row, Col } from 'react-flexbox-grid';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { faTwitter, faGithub } from '@fortawesome/free-brands-svg-icons'
 
 const style = {
     root: {
@@ -14,6 +16,11 @@ const style = {
     img: {
         width: "100%"
 
+    },
+    links: {
+        color: "rgb(162 162 175)",
+        marginRight: "4px",
+        marginLeft: "4px",
     }
 }
 
@@ -28,6 +35,8 @@ const HomeEntrypoint = (_props) => {
                     <Col md={6}>
                         <h1>timbrook<span style={style.span}>(dot)</span>dev</h1>
                         <h5>Don't think about it too hard</h5>
+                        <a style={style.links} href={'https://twitter.com/7imbrook'}><FontAwesomeIcon icon={faTwitter} /></a>
+                        <a style={style.links} href={'https://github.com/7imbrook'}><FontAwesomeIcon icon={faGithub} /></a>
                     </Col>
                 </Row>
             </Grid>
