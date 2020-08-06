@@ -61,6 +61,9 @@ jobs:
           root: /tmp/
           paths:
             - digest.txt
+      - store_artifacts:
+          path: /tmp/digest.txt
+          destination: image_digest
   push-frontend:
     executor: python/default
     steps:
