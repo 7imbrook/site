@@ -24,7 +24,7 @@ const style = {
     }
 }
 
-const HomeEntrypoint = (_props) => {
+const HomeEntrypoint = (props) => {
     return (
         <div style={style.root}>
             <Grid fluid>
@@ -34,7 +34,7 @@ const HomeEntrypoint = (_props) => {
                     </Col>
                     <Col md={6}>
                         <h1>timbrook<span style={style.span}>(dot)</span>dev</h1>
-                        <h5>Don't think about it too hard</h5>
+                        <h5>{props.tagline}</h5>
                         <a style={style.links} href={'https://twitter.com/7imbrook'}><FontAwesomeIcon icon={faTwitter} /></a>
                         <a style={style.links} href={'https://github.com/7imbrook'}><FontAwesomeIcon icon={faGithub} /></a>
                     </Col>
