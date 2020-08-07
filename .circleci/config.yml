@@ -99,6 +99,20 @@ jobs:
       - run:
           name: Wait for Deployment
           command: kubectl rollout status deployment/site-prerelease-deployment
+  deploy-production:
+    machine:
+      image: ubuntu-1604:202004-01
+    steps:
+      - kubernetes/install
+      - doctl/install
+      - doctl/initialize
+      - run: |
+          doctl kubernetes cluster kubeconfig save west-sfo2
+      - attach_workspace:
+          at: ./
+      - run:
+          name: Set Namespace
+          command: kubectl config set-context --current --namespace ns-site
       - run:
           name: Patch Production
           command: kubectl set image deployment/site-deployment app=$(cat ./digest.txt)
@@ -137,3 +151,11 @@ workflows:
                 - master
           requires:
             - push-image 
+      - deploy-production:
+          context: DigitalOcean
+          filters:
+            branches:
+              only:
+                - master
+          requires:
+            - deploy-prerelease
