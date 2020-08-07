@@ -7,7 +7,9 @@ from utils.react import render_entrypoint
 
 
 def home(request):
-    return render_entrypoint(request, "Home", {})
+    return render_entrypoint(request, "Home", {
+        "tagline": "Don't think about it too hard"
+    })
 
 
 def info(request):
