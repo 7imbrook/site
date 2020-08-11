@@ -58,11 +58,6 @@ exec {
 }
 
 template {
-  destination = "/opt/config/testing.yaml"
-  contents = "{{ key \"site/testing/strings\" }}"
-}
-
-template {
   destination = "/etc/ssl/certs/consulCA.pem"
   contents = "{{ range caRoots }}{{ .RootCertPEM }}{{ end }}"
 }
