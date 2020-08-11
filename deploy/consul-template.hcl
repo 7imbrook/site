@@ -7,7 +7,7 @@ consul {
   }
 
   ssl {
-    enabled = false
+    enabled = true
     verify = false
   }
 }
