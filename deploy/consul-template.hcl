@@ -42,7 +42,7 @@ exec {
   # one instead of sending it a signal. This is useful for legacy applications
   # or applications that cannot properly reload their configuration without a
   # full reload.
-  reload_signal = "SIGHUP"
+  reload_signal = "SIGUSR1"
 
   # This defines the signal sent to the child process when Consul Template is
   # gracefully shutting down. The application should begin a graceful cleanup.
@@ -65,11 +65,11 @@ template {
 template {
   destination = "/app/backend/conf/database.py"
   source = "/opt/deploy/templates/database.py"
+  command = "sh -c \"echo c > /tmp/fifo0\""
 }
 
 template {
   destination = "/app/backend/conf/static.py"
   source = "/opt/deploy/templates/static.py"
+  command = "sh -c \"echo c > /tmp/fifo0\""
 }
-
-
