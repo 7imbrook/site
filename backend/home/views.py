@@ -23,3 +23,7 @@ def info(request):
             "consul_host": settings.CONSUL_ADDR,
         },
     )
+
+
+def notFound(request, _exception):
+    return render_entrypoint(request, "NotFound", {})

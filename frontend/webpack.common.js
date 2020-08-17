@@ -5,6 +5,7 @@ const { CleanWebpackPlugin } = require('clean-webpack-plugin');
 module.exports = {
     entry: {
         Home: './entrypoints/HomeEntrypoint.jsx',
+        NotFound: './entrypoints/NotFoundEntrypoint.jsx',
     },
     output: {
         path: path.resolve(__dirname, '../backend/static'),
