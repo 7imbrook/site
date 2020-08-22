@@ -1,14 +1,19 @@
-import socket
+import socket, random
 
 from django.shortcuts import render
 from django.http import HttpResponse
 from django.conf import settings
 from utils.react import render_entrypoint
+from home.models import Page, SlugLocations
 
 
 def home(request):
+    slug = Page.objects.get(type=SlugLocations.HOME)
+    messages = slug.slugmessage_set.filter(active=True)
+    tagline = random.choice(messages)
+
     return render_entrypoint(request, "Home", {
-        "tagline": "Don't think about it too hard"
+        "tagline": tagline.slug
     })
 
 
