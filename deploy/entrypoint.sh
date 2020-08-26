@@ -2,6 +2,7 @@
 
 # TODO: this needs set in deploy
 export RELEASE_STAGE=prerelease
+export CONSUL_HTTP_SSL_VERIFY=false
 
 echo "Performing pre startup tasks"
 echo "Template bin:" $(which consul-template)
@@ -12,7 +13,7 @@ echo "Stage:" $RELEASE_STAGE
 cleanup() {
     # Logout of consul here
     echo "Exiting and shutting down"
-     consul logout -token-file ./token
+    consul logout -token-file ./token
 }
 
 trap cleanup EXIT;
