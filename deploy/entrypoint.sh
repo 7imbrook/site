@@ -9,6 +9,12 @@ echo "Consul host:" $CONSUL_HTTP_ADDR
 echo "Vault host:" $VAULT_ADDR
 echo "Stage:" $RELEASE_STAGE
 
+cleanup() {
+    # Logout of consul here
+    echo "Exiting and shutting down"
+}
+
+trap cleanup EXIT;
 
 # make migrations, only do this in prerelease
 consul-template -config /opt/deploy/consul-template.hcl -once -exec "python ./manage.py migrate"
