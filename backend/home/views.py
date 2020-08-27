@@ -31,4 +31,8 @@ def info(request):
 
 
 def notFound(request, _exception):
-    return render_entrypoint(request, "NotFound", {})
+    return render_entrypoint(request, "NotFound", {}, status=404)
+
+def somethingWrong(request):
+    print("hi?")
+    return render_entrypoint(request, "NotFound", {}, status=500)
