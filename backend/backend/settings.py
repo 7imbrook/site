@@ -111,6 +111,7 @@ STATICFILES_DIRS = [BASE_DIR + "/static"]
 env_map = {
     "dev": "conf.dev",
     "prerelease": "conf.prerelease",
+    "prod": "conf.prerelease",
     "build": "conf.prerelease",
 }
 

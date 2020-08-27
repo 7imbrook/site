@@ -1,7 +1,6 @@
 #!/bin/bash
 
 # TODO: this needs set in deploy
-export RELEASE_STAGE=prerelease
 export CONSUL_HTTP_SSL_VERIFY=false
 
 echo "Performing pre startup tasks"
