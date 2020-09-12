@@ -1,0 +1,16 @@
+syntax = "proto3";
+
+package send_message_service;
+
+message SMSRequest {
+    optional int32 recipientID = 1; 
+    optional string message = 2;
+}
+
+message SMSResponse {
+    optional string ref = 1;
+}
+
+service SendMessage {
+    rpc sendTextSMS (SMSRequest) returns (SMSResponse) {}
+}

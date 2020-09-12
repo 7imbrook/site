@@ -6,3 +6,5 @@ psycopg2==2.8.5
 ujson==3.0.0
 unittest-xml-reporting==3.0.2
 djangorestframework==3.11.0
+grpcio==1.31.0
+grpcio-tools==1.31.0
