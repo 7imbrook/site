@@ -17,11 +17,24 @@ Including another URLconf
 import home
 from django.contrib import admin
 from django.urls import path, include
+from django.urls import include, path
+from rest_framework import routers
+from projects.api.views import ProjectViewSet
+
+router = routers.DefaultRouter()
+router.register(r'projects', ProjectViewSet)
 
 urlpatterns = [
+    # Pages
     path('', include('home.urls')),
     path('admin/', admin.site.urls),
+
+    # API Paths
     path('api/auth/', include('authorization.api_urls')),
+    path('api/projects/', include('projects.api.urls')),
+
+    # Router based routes
+    path('api/data/', include(router.urls)),
 ]
 
 handler404 = home.views.notFound
