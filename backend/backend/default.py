@@ -108,27 +108,6 @@ STATIC_URL = "/static/"
 # you run `collectstatic`).
 STATICFILES_DIRS = [BASE_DIR + "/static"]
 
-env_map = {
-    "dev": "conf.dev",
-    "prerelease": "conf.prerelease",
-    "prod": "conf.prerelease",
-    "build": "conf.prerelease",
-}
-
-try:
-    e = os.environ.get("RELEASE_STAGE", "prerelease")
-    module = __import__(env_map.get(e), globals(), locals(), ["*"])
-    for k in dir(module):
-        if not k.startswith("__"):  # Exclude from adding to settings
-            locals()[k] = getattr(module, k)
-except Exception as e:
-    print("Ohhh no settings are broken")
-    print(e)
-
-
-# TBD include only if testing
-from conf.testing import *
-
 LOGGING = {
     'version': 1,
     'disable_existing_loggers': False,

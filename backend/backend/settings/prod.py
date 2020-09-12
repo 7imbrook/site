@@ -1,8 +1,6 @@
+from backend.default import *
 
-# Temp
 DEBUG = False
-
-PRERELEASE = True
 PROD = True
 
 ALLOWED_HOSTS = [
@@ -24,6 +22,7 @@ AWS_S3_ENDPOINT_URL = 'https://sfo2.digitaloceanspaces.com'
 STATICFILES_STORAGE = 'storages.backends.s3boto3.S3Boto3Storage'
 
 # Import runtime generated configs
+# TODO, I don't like this hack
 try:
     from backend.conf.database import *
     from backend.conf.static import *

@@ -77,7 +77,7 @@ jobs:
           name: collectstatic
           working_directory: ./backend
           environment:
-            RELEASE_STAGE: build
+            DJANGO_SETTINGS_MODULE: backend.settings.prerelease
           command: ./manage.py collectstatic --no-input
   deploy-prerelease:
     machine:
