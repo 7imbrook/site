@@ -1,9 +1,9 @@
-resource "kubernetes_deployment" "personal-site" {
+resource "kubernetes_deployment" "deployment" {
 
   wait_for_rollout = false
 
   metadata {
-    name = "personal-site-deployment-v2"
+    name = "${var.service_name}-deployment-v2"
     labels = {
       deployVersion = "2"
       app           = "site"
@@ -11,7 +11,7 @@ resource "kubernetes_deployment" "personal-site" {
   }
 
   spec {
-    replicas = 1
+    replicas = var.replicas
 
     selector {
       match_labels = {
@@ -119,6 +119,11 @@ resource "kubernetes_deployment" "personal-site" {
           }
 
           env {
+            name = "SERVICE_NAME"
+            value = var.service_name
+          }
+
+          env {
             name  = "CONSUL_HTTP_ADDR"
             value = "https://$(HOST_IP):8501"
           }
@@ -152,7 +157,7 @@ resource "kubernetes_config_map" "service-config" {
 # None default service account
 resource "kubernetes_service_account" "service" {
   metadata {
-    name = "nginx"
+    name = var.service_name
   }
   automount_service_account_token = true
 }
