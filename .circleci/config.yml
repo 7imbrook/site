@@ -145,7 +145,12 @@ workflows:
             - build-frontend
   backend:
     jobs:
-      - build-sidecar
+      - build-sidecar:
+          context: Docker Building
+          filters:
+            branches:
+              only:
+                - master
       - unit-test
       - push-image:
           context: Docker Building
