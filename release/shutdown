@@ -1,0 +1,8 @@
+#!/bin/sh
+
+export CONSUL_HTTP_TOKEN=$(cat ./consul-token)
+
+consul services deregister -id $HOSTNAME
+consul logout
+
+echo "Deregistered";

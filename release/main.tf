@@ -38,6 +38,9 @@ resource "kubernetes_deployment" "personal-site" {
           }
         }
 
+        automount_service_account_token = true
+        service_account_name            = kubernetes_service_account.service.metadata.0.name
+
         # Main App Container
         container {
           image = "nginx:1.7.8"
@@ -59,7 +62,7 @@ resource "kubernetes_deployment" "personal-site" {
               path = "/"
               port = 80
             }
-            
+
             initial_delay_seconds = 1
             period_seconds        = 300
           }
@@ -69,15 +72,19 @@ resource "kubernetes_deployment" "personal-site" {
         container {
           # Local Build
           image_pull_policy = "Never"
-          image   = "sidecar:latest"
-          name    = "consul-agent"
-          command = split(" ", "register_service /consul/services/service.hcl")
+          image             = "7imbrook/sidecar:latest"
+          name              = "consul-agent"
+          command           = ["register_service", "/consul/services/service.hcl"]
+
+          port {
+            container_port = 21000
+            name           = "proxy"
+          }
 
           lifecycle {
             pre_stop {
               exec {
-                # command = split(" ", "consul services deregister -id $HOSTNAME")
-                command =["/bin/sh", "-c", "consul services deregister -id $HOSTNAME"]
+                command = ["/bin/shutdown"]
               }
             }
           }
@@ -101,7 +108,7 @@ resource "kubernetes_deployment" "personal-site" {
               }
             }
           }
-          
+
           env {
             name = "POD_IP"
             value_from {
@@ -110,10 +117,15 @@ resource "kubernetes_deployment" "personal-site" {
               }
             }
           }
-          
+
           env {
             name  = "CONSUL_HTTP_ADDR"
-            value = "http://$(HOST_IP):8500"
+            value = "https://$(HOST_IP):8501"
+          }
+
+          env {
+            name  = "CONSUL_HTTP_SSL_VERIFY"
+            value = "false"
           }
 
           volume_mount {
@@ -127,8 +139,6 @@ resource "kubernetes_deployment" "personal-site" {
 }
 
 # Load service configuration
-
-
 resource "kubernetes_config_map" "service-config" {
   metadata {
     name = "service-config"
@@ -137,5 +147,12 @@ resource "kubernetes_config_map" "service-config" {
   data = {
     "service.hcl" = file("${path.module}/service.hcl")
   }
+}
 
+# None default service account
+resource "kubernetes_service_account" "service" {
+  metadata {
+    name = "nginx"
+  }
+  automount_service_account_token = true
 }

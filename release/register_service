@@ -1,5 +1,13 @@
 #!/bin/sh
 
+echo "Authenticating to consul"
+
+consul login -method consul-consul-k8s-auth-method \
+    -token-sink-file ./consul-token \
+    -bearer-token-file /var/run/secrets/kubernetes.io/serviceaccount/token;
+
+export CONSUL_HTTP_TOKEN=$(cat ./consul-token)
+
 echo "Registering services in $1";
 echo $HOSTNAME
 
@@ -7,4 +15,5 @@ echo $HOSTNAME
 envsubst < /consul/services/service.hcl > service.hcl
 consul services register ./service.hcl
 
-consul watch -type=keyprefix -prefix=test echo "hi"
+# Run consul proxy, because envoy isn't working???
+consul connect proxy -sidecar-for $HOSTNAME
