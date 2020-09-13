@@ -1,0 +1,10 @@
+#!/bin/sh
+
+echo "Registering services in $1";
+echo $HOSTNAME
+
+# Populate service template and register
+envsubst < /consul/services/service.hcl > service.hcl
+consul services register ./service.hcl
+
+consul watch -type=keyprefix -prefix=test echo "hi"
