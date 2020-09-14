@@ -2,7 +2,7 @@
 
 echo "Authenticating to consul"
 
-consul login -method consul-consul-k8s-auth-method \
+consul login -method consul-k8s-auth-method \
     -token-sink-file ./consul-token \
     -bearer-token-file /var/run/secrets/kubernetes.io/serviceaccount/token;
 

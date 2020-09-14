@@ -8,6 +8,7 @@ resource "kubernetes_deployment" "deployment" {
       deployVersion = "2"
       app           = "site"
     }
+    namespace = var.namespace
   }
 
   spec {
@@ -43,7 +44,7 @@ resource "kubernetes_deployment" "deployment" {
 
         # Main App Container
         container {
-          image = "nginx:1.7.8"
+          image = var.image
           name  = "app"
 
           resources {
@@ -71,8 +72,8 @@ resource "kubernetes_deployment" "deployment" {
         # Service registration
         container {
           # Local Build
-          image_pull_policy = "Never"
-          image             = "7imbrook/sidecar:latest"
+          image_pull_policy = "Always"
+          image             = "7imbrook/sidecar:prod"
           name              = "consul-agent"
           command           = ["register_service", "/consul/services/service.hcl"]
 
@@ -119,7 +120,7 @@ resource "kubernetes_deployment" "deployment" {
           }
 
           env {
-            name = "SERVICE_NAME"
+            name  = "SERVICE_NAME"
             value = var.service_name
           }
 
@@ -146,7 +147,8 @@ resource "kubernetes_deployment" "deployment" {
 # Load service configuration
 resource "kubernetes_config_map" "service-config" {
   metadata {
-    name = "service-config"
+    name      = "service-config"
+    namespace = var.namespace
   }
 
   data = {
@@ -157,7 +159,8 @@ resource "kubernetes_config_map" "service-config" {
 # None default service account
 resource "kubernetes_service_account" "service" {
   metadata {
-    name = var.service_name
+    name      = var.service_name
+    namespace = var.namespace
   }
   automount_service_account_token = true
 }

@@ -1,7 +1,15 @@
 variable "service_name" {
-    default = "django"
+  default = "django"
+}
+
+variable "namespace" {
+  default = "production-django"
 }
 
 variable "replicas" {
-    default = 5
+  default = 1
+}
+
+variable "image" {
+  default = "nginx:mainline"
 }
