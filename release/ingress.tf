@@ -8,16 +8,16 @@ resource "consul_config_entry" "ingress_gateway" {
       Enabled = true
     }
     Listeners = [{
-        Port = 443,
-        Protocol = "http",
-        Services = [
-          {
-            Name = "site"
-            Hosts = [
-                "timbrook.dev"
-            ]
-          }
-        ]
+      Port     = 443,
+      Protocol = "http",
+      Services = [
+        {
+          Name = "django"
+          Hosts = [
+            "timbrook.dev"
+          ]
+        }
+      ]
     }]
   })
 }
@@ -43,8 +43,9 @@ resource "consul_config_entry" "service-defaults" {
 
 # Route myself to my new deploy with secret header
 resource "consul_config_entry" "service-router-site" {
-  name = "site" # use existing ingresses via site, steal traffic
-  kind = "service-router"
+  count = 0
+  name  = "site" # use existing ingresses via site, steal traffic
+  kind  = "service-router"
 
   config_json = jsonencode({
     Routes = [
@@ -60,12 +61,12 @@ resource "consul_config_entry" "service-router-site" {
           }
         }
         Destination = {
-          Service       = "django"
+          Service = "django"
         }
       }
     ]
   })
-  
+
   depends_on = [
     consul_config_entry.service-defaults
   ]

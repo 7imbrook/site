@@ -8,7 +8,7 @@ resource "kubernetes_deployment" "deployment" {
       deployVersion = "2"
       app           = "site"
     }
-    namespace = var.namespace
+    namespace = kubernetes_namespace.namespace.metadata.0.name
   }
 
   spec {
@@ -148,7 +148,7 @@ resource "kubernetes_deployment" "deployment" {
 resource "kubernetes_config_map" "service-config" {
   metadata {
     name      = "service-config"
-    namespace = var.namespace
+    namespace = kubernetes_namespace.namespace.metadata.0.name
   }
 
   data = {
@@ -160,7 +160,13 @@ resource "kubernetes_config_map" "service-config" {
 resource "kubernetes_service_account" "service" {
   metadata {
     name      = var.service_name
-    namespace = var.namespace
+    namespace = kubernetes_namespace.namespace.metadata.0.name
   }
   automount_service_account_token = true
+}
+
+resource "kubernetes_namespace" "namespace" {
+  metadata {
+    name = var.namespace
+  }
 }
