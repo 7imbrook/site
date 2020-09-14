@@ -106,33 +106,13 @@ jobs:
           at: ./
       - run:
           name: Set Namespace
-          command: kubectl config set-context --current --namespace ns-site
+          command: kubectl config set-context --current --namespace production-django
       - run:
           name: Patch Prerelease
-          command: kubectl set image deployment/site-prerelease-deployment app=$(cat ./digest.txt)
+          command: kubectl set image deployment/django-deployment-v2 app=$(cat ./digest.txt)
       - run:
           name: Wait for Deployment
-          command: kubectl rollout status deployment/site-prerelease-deployment
-  deploy-production:
-    machine:
-      image: ubuntu-1604:202004-01
-    steps:
-      - kubernetes/install
-      - doctl/install
-      - doctl/initialize
-      - run: |
-          doctl kubernetes cluster kubeconfig save west-sfo2
-      - attach_workspace:
-          at: ./
-      - run:
-          name: Set Namespace
-          command: kubectl config set-context --current --namespace ns-site
-      - run:
-          name: Patch Production
-          command: kubectl set image deployment/site-deployment app=$(cat ./digest.txt)
-      - run:
-          name: Wait for Deployment
-          command: kubectl rollout status deployment/site-deployment
+          command: kubectl rollout status deployment/django-deployment-v2
 
 workflows:
   continuous:
@@ -171,11 +151,3 @@ workflows:
             - push-image 
             - build-sidecar
             - build-frontend
-      - deploy-production:
-          context: DigitalOcean
-          filters:
-            branches:
-              only:
-                - master
-          requires:
-            - deploy-prerelease
