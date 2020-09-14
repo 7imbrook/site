@@ -15,6 +15,7 @@ Including another URLconf
 """
 
 import home
+from django.conf import settings
 from django.contrib import admin
 from django.urls import path, include
 from django.urls import include, path
@@ -27,7 +28,6 @@ router.register(r'projects', ProjectViewSet)
 urlpatterns = [
     # Pages
     path('', include('home.urls')),
-    path('admin/', admin.site.urls),
 
     # API Paths
     path('api/auth/', include('authorization.api_urls')),
@@ -36,6 +36,10 @@ urlpatterns = [
     # Router based routes
     path('api/data/', include(router.urls)),
 ]
+
+if settings.ADMIN:
+    urlpatterns.append(path('admin/', admin.site.urls))
+
 
 handler404 = home.views.notFound
 handler500 = home.views.somethingWrong

@@ -9,6 +9,8 @@ DEBUG = True
 PRERELEASE = False
 PROD = False
 
+ADMIN = True
+
 ALLOWED_HOSTS = ["127.0.0.1"]
 
 
