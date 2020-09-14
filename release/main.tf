@@ -73,7 +73,7 @@ resource "kubernetes_deployment" "deployment" {
         container {
           # Local Build
           image_pull_policy = "Always"
-          image             = "7imbrook/sidecar:latest"
+          image             = "7imbrook/sidecar:prod"
           name              = "consul-agent"
           command           = ["register_service", "/consul/services/service.hcl"]
 

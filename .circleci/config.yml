@@ -73,9 +73,11 @@ jobs:
       - docker/build:
           image: 7imbrook/sidecar
           path: release
+          tag: prod
           docker-context: release
       - docker/push:
           image: 7imbrook/sidecar
+          tag: prod
   push-frontend:
     executor: python/default
     steps:
