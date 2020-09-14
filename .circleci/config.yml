@@ -73,6 +73,7 @@ jobs:
       - docker/build:
           image: 7imbrook/sidecar
           path: release
+          docker-context: release
       - docker/push:
           image: 7imbrook/sidecar
   push-frontend:
@@ -132,7 +133,7 @@ jobs:
           command: kubectl rollout status deployment/site-deployment
 
 workflows:
-  frontend:
+  continuous:
     jobs:
       - build-frontend
       - push-frontend:
@@ -143,8 +144,6 @@ workflows:
                 - master
           requires:
             - build-frontend
-  backend:
-    jobs:
       - build-sidecar:
           context: Docker Building
           filters:
@@ -169,6 +168,7 @@ workflows:
           requires:
             - push-image 
             - build-sidecar
+            - build-frontend
       - deploy-production:
           context: DigitalOcean
           filters:
