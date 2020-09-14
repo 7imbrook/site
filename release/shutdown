@@ -2,7 +2,7 @@
 
 export CONSUL_HTTP_TOKEN=$(cat ./consul-token)
 
-consul services deregister -id $HOSTNAME
+consul services deregister ./service.hcl
 consul logout
 
 echo "Deregistered";
