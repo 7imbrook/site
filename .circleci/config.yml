@@ -64,6 +64,17 @@ jobs:
       - store_artifacts:
           path: /tmp/digest.txt
           destination: image_digest
+  build-sidecar:
+    executor: docker/docker
+    steps:
+      - setup_remote_docker
+      - checkout
+      - docker/check
+      - docker/build:
+          image: 7imbrook/sidecar
+          path: release/Dockerfile
+      - docker/push:
+          image: 7imbrook/sidecar
   push-frontend:
     executor: python/default
     steps:
@@ -134,6 +145,12 @@ workflows:
             - build-frontend
   backend:
     jobs:
+      - build-sidecar:
+          context: Docker Building
+          filters:
+            branches:
+              only:
+                - master
       - unit-test
       - push-image:
           context: Docker Building
@@ -151,6 +168,7 @@ workflows:
                 - master
           requires:
             - push-image 
+            - build-sidecar
       - deploy-production:
           context: DigitalOcean
           filters:
