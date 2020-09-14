@@ -72,7 +72,7 @@ jobs:
       - docker/check
       - docker/build:
           image: 7imbrook/sidecar
-          path: release/Dockerfile
+          path: release
       - docker/push:
           image: 7imbrook/sidecar
   push-frontend:
