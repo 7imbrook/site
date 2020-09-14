@@ -1,5 +1,8 @@
 #!/bin/sh
 
+# Set exit on error
+set -e
+
 echo "Authenticating to consul"
 
 consul login -method consul-k8s-auth-method \
