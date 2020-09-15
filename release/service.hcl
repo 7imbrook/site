@@ -5,7 +5,7 @@ services {
   address = "${POD_IP}"
 
   check {
-    id   = "http-check-${POD_IP}"
+    id   = "http-check-${HOSTNAME}"
     name = "Basic Reachablity"
     http = "http://${POD_IP}:4000/info"
     interval = "10s"
