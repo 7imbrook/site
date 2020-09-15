@@ -62,14 +62,14 @@ template {
   contents = "{{ range caRoots }}{{ .RootCertPEM }}{{ end }}"
 }
 
-template {
-  destination = "/app/backend/conf/database.py"
-  source = "/opt/deploy/templates/database.py"
-  command = "sh -c \"echo c > /tmp/fifo0\""
-}
+// template {
+//   destination = "/app/backend/conf/database.py"
+//   source = "/opt/deploy/templates/database.py"
+//   command = "sh -c \"echo c > /tmp/fifo0\""
+// }
 
-template {
-  destination = "/app/backend/conf/static.py"
-  source = "/opt/deploy/templates/static.py"
-  command = "sh -c \"echo c > /tmp/fifo0\""
-}
+// template {
+//   destination = "/app/backend/conf/static.py"
+//   source = "/opt/deploy/templates/static.py"
+//   command = "sh -c \"echo c > /tmp/fifo0\""
+// }

@@ -165,6 +165,11 @@ resource "kubernetes_deployment" "deployment" {
             name  = "CONSUL_HTTP_SSL_VERIFY"
             value = "false"
           }
+          
+          env {
+            name  = "DJANGO_SETTINGS_MODULE"
+            value = "backend.settings.prerelease"
+          }
 
           volume_mount {
             mount_path = "/consul/services/"
