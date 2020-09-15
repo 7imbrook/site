@@ -11,5 +11,5 @@ variable "replicas" {
 }
 
 variable "image" {
-  default = "nginx:mainline"
+  default = "7imbrook/site:migrate"
 }

@@ -39,6 +39,13 @@ resource "kubernetes_deployment" "deployment" {
           }
         }
 
+        volume {
+          name = "consul-token"
+          empty_dir {
+            medium = "Memory"
+          }
+        }
+
         automount_service_account_token = true
         service_account_name            = kubernetes_service_account.service.metadata.0.name
 
@@ -67,6 +74,31 @@ resource "kubernetes_deployment" "deployment" {
             initial_delay_seconds = 1
             period_seconds        = 300
           }
+          
+          env {
+            name = "HOST_IP"
+            value_from {
+              field_ref {
+                field_path = "status.hostIP"
+              }
+            }
+          }
+          
+          env {
+            name  = "CONSUL_HTTP_ADDR"
+            value = "https://$(HOST_IP):8501"
+          }
+
+          env {
+            name  = "CONSUL_HTTP_SSL_VERIFY"
+            value = "false"
+          }
+          
+          volume_mount {
+            mount_path = "/consul/token/"
+            name       = "consul-token"
+          }
+        
         }
 
         # Service registration
@@ -137,6 +169,11 @@ resource "kubernetes_deployment" "deployment" {
           volume_mount {
             mount_path = "/consul/services/"
             name       = "service-config"
+          }
+          
+          volume_mount {
+            mount_path = "/consul/token/"
+            name       = "consul-token"
           }
         }
       }
