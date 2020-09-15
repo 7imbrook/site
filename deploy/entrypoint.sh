@@ -11,7 +11,7 @@ echo "Consul host:" $CONSUL_HTTP_ADDR
 echo "Vault host:" $VAULT_ADDR
 echo "DJANGO_SETTINGS_MODULE:" $DJANGO_SETTINGS_MODULE
 
-export CONSUL_HTTP_TOKEN-=$(cat /consul/token/consul-token);
+export CONSUL_HTTP_TOKEN=$(cat /consul/token/consul-token);
 
 # make migrations, only do this in prerelease
 consul-template -config /opt/deploy/consul-template.hcl -once -exec "python ./manage.py migrate"
