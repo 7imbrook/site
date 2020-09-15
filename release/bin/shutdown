@@ -1,6 +1,6 @@
 #!/bin/sh
 
-export CONSUL_HTTP_TOKEN=$(cat ./consul-token)
+export CONSUL_HTTP_TOKEN=$(cat /consul/token/consul-token)
 
 consul services deregister ./service.hcl
 consul logout
