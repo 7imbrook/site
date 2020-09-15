@@ -150,4 +150,3 @@ workflows:
           requires:
             - push-image 
             - build-sidecar
-            - build-frontend
