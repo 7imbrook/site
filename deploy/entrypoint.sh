@@ -1,5 +1,7 @@
 #!/bin/bash
 
+set -e;
+
 # TODO: this needs set in deploy
 export CONSUL_HTTP_SSL_VERIFY=false
 
