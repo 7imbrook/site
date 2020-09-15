@@ -7,7 +7,7 @@ DATABASES = {
         'USER': '{{ .Data.username }}',
         'PASSWORD': '{{ .Data.password }}',
         {{ end }}
-        'HOST': '{{ key "site/database/host" }}',
-        'PORT': '{{ key "site/database/port" }}',
+        'HOST': '{{ key "dbcommon/sfo-default/host" }}',
+        'PORT': '{{ key "dbcommon/sfo-default/port" }}',
     }
 }
