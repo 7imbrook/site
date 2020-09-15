@@ -68,7 +68,7 @@ resource "kubernetes_deployment" "deployment" {
           liveness_probe {
             http_get {
               path = "/"
-              port = 80
+              port = 4000
             }
 
             initial_delay_seconds = 1
@@ -168,7 +168,7 @@ resource "kubernetes_deployment" "deployment" {
           
           env {
             name  = "DJANGO_SETTINGS_MODULE"
-            value = "backend.settings.prerelease"
+            value = "backend.settings.dev"
           }
 
           volume_mount {
