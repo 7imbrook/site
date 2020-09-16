@@ -7,9 +7,9 @@ variable "namespace" {
 }
 
 variable "replicas" {
-  default = 2
+  default = 4
 }
 
 variable "image" {
-  default = "7imbrook/site:migrate"
+  default = "nginx:mainline"
 }

@@ -27,6 +27,7 @@ resource "kubernetes_deployment" "deployment" {
           deployVersion       = "2"
           app                 = "site"
           service_config_hash = filemd5("${path.module}/service.hcl")
+          vault_config_hash = filemd5("${path.module}/vault.hcl")
         }
       }
 
@@ -51,6 +52,7 @@ resource "kubernetes_deployment" "deployment" {
 
         # Main App Container
         container {
+          image_pull_policy = "Always"
           image = var.image
           name  = "app"
 
@@ -195,6 +197,7 @@ resource "kubernetes_config_map" "service-config" {
 
   data = {
     "service.hcl" = file("${path.module}/service.hcl")
+    "vault.hcl" = file("${path.module}/vault.hcl")
   }
 }
 

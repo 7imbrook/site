@@ -1,10 +1,7 @@
 terraform {
-  backend "remote" {
-    hostname     = "app.terraform.io"
-    organization = "timbrook"
-
-    workspaces {
-      name = "personal-site"
-    }
+  backend "consul" {
+    address = "consul.timbrook.dev"
+    scheme  = "https"
+    path    = "terraform_states/django"
   }
 }

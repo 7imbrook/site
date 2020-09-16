@@ -7,7 +7,7 @@ services {
   check {
     id   = "http-check-${HOSTNAME}"
     name = "Basic Reachablity"
-    http = "http://${POD_IP}:4000/info"
+    http = "http://${POD_IP}:80/"
     interval = "10s"
     timeout  = "5s"
   }
@@ -27,7 +27,7 @@ services {
     destination_service_name = "${SERVICE_NAME}"
     destination_service_id = "${HOSTNAME}"
     local_service_address = "127.0.0.1"
-    local_service_port = 4000
+    local_service_port = 80 
   }
 
   checks {

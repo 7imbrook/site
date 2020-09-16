@@ -1,0 +1,371 @@
+client:
+  affinity: {}
+  annotations: null
+  dataDirectoryHostPath: null
+  dnsPolicy: null
+  enabled: '-'
+  exposeGossipPorts: false
+  extraConfig: |
+    {}
+  extraEnvironmentVars: {}
+  extraVolumes: []
+  grpc: true
+  hostNetwork: false
+  image: null
+  join: null
+  nodeSelector: null
+  priorityClassName: ""
+  resources:
+    limits:
+      cpu: 100m
+      memory: 100Mi
+    requests:
+      cpu: 100m
+      memory: 100Mi
+  snapshotAgent:
+    caCert: null
+    configSecret:
+      secretKey: null
+      secretName: null
+    enabled: false
+    replicas: 2
+    resources:
+      limits:
+        cpu: 50m
+        memory: 50Mi
+      requests:
+        cpu: 50m
+        memory: 50Mi
+  tolerations: ""
+  updateStrategy: null
+connectInject:
+  aclBindingRuleSelector: serviceaccount.name!=default
+  aclInjectToken:
+    secretKey: null
+    secretName: null
+  affinity: null
+  centralConfig:
+    defaultProtocol: null
+    enabled: true
+    proxyDefaults: |
+      {}
+  certs:
+    caBundle: ""
+    certName: tls.crt
+    keyName: tls.key
+    secretName: null
+  consulNamespaces:
+    consulDestinationNamespace: default
+    mirroringK8S: false
+    mirroringK8SPrefix: ""
+  default: false
+  enabled: true
+  image: null
+  imageConsul: null
+  imageEnvoy: null
+  initContainer:
+    resources:
+      limits:
+        cpu: 50m
+        memory: 150Mi
+      requests:
+        cpu: 50m
+        memory: 25Mi
+  k8sAllowNamespaces:
+  - '*'
+  k8sDenyNamespaces: []
+  namespaceSelector: null
+  nodeSelector: null
+  overrideAuthMethodName: ""
+  resources:
+    limits:
+      cpu: 50m
+      memory: 50Mi
+    requests:
+      cpu: 50m
+      memory: 50Mi
+  sidecarProxy:
+    resources:
+      limits:
+        cpu: null
+        memory: null
+      requests:
+        cpu: null
+        memory: null
+  tolerations: null
+dns:
+  annotations: null
+  clusterIP: null
+  enabled: '-'
+externalServers:
+  enabled: false
+  hosts: []
+  httpsPort: 8501
+  k8sAuthMethodHost: null
+  tlsServerName: null
+  useSystemRoots: false
+global:
+  acls:
+    bootstrapToken:
+      secretKey: null
+      secretName: null
+    createReplicationToken: false
+    manageSystemACLs: true
+    replicationToken:
+      secretKey: null
+      secretName: null
+  datacenter: mini
+  domain: consul
+  enableConsulNamespaces: false
+  enablePodSecurityPolicies: false
+  enabled: true
+  federation:
+    createFederationSecret: false
+    enabled: false
+  gossipEncryption:
+    secretKey: ""
+    secretName: ""
+  image: consul:1.8.4
+  imageEnvoy: envoyproxy/envoy-alpine:v1.14.2
+  imageK8S: hashicorp/consul-k8s:0.18.1
+  imagePullSecrets: []
+  lifecycleSidecarContainer:
+    resources:
+      limits:
+        cpu: 20m
+        memory: 50Mi
+      requests:
+        cpu: 20m
+        memory: 25Mi
+  name: null
+  tls:
+    caCert:
+      secretKey: null
+      secretName: null
+    caKey:
+      secretKey: null
+      secretName: null
+    enableAutoEncrypt: false
+    enabled: true
+    httpsOnly: true
+    serverAdditionalDNSSANs: []
+    serverAdditionalIPSANs: []
+    verify: true
+ingressGateways:
+  defaults:
+    affinity: |
+      podAntiAffinity:
+        requiredDuringSchedulingIgnoredDuringExecution:
+          - labelSelector:
+              matchLabels:
+                app: {{ template "consul.name" . }}
+                release: "{{ .Release.Name }}"
+                component: ingress-gateway
+            topologyKey: kubernetes.io/hostname
+    annotations: null
+    consulNamespace: default
+    initCopyConsulContainer:
+      resources:
+        limits:
+          cpu: 50m
+          memory: 150Mi
+        requests:
+          cpu: 50m
+          memory: 25Mi
+    nodeSelector: null
+    priorityClassName: ""
+    replicas: 1
+    resources:
+      limits:
+        cpu: 100m
+        memory: 100Mi
+      requests:
+        cpu: 100m
+        memory: 100Mi
+    service:
+      additionalSpec: null
+      annotations: null
+      ports:
+      - nodePort: null
+        port: 80
+      - nodePort: null
+        port: 443
+      type: LoadBalancer
+    tolerations: null
+  enabled: true
+  gateways:
+  - name: ingress-gateway
+meshGateway:
+  affinity: |
+    podAntiAffinity:
+      requiredDuringSchedulingIgnoredDuringExecution:
+        - labelSelector:
+            matchLabels:
+              app: {{ template "consul.name" . }}
+              release: "{{ .Release.Name }}"
+              component: mesh-gateway
+          topologyKey: kubernetes.io/hostname
+  annotations: null
+  consulServiceName: mesh-gateway
+  containerPort: 8443
+  dnsPolicy: null
+  enabled: false
+  globalMode: local
+  hostNetwork: false
+  hostPort: null
+  imageEnvoy: envoyproxy/envoy-alpine:v1.14.2
+  initCopyConsulContainer:
+    resources:
+      limits:
+        cpu: 50m
+        memory: 150Mi
+      requests:
+        cpu: 50m
+        memory: 25Mi
+  nodeSelector: null
+  priorityClassName: ""
+  replicas: 2
+  resources:
+    limits:
+      cpu: 100m
+      memory: 100Mi
+    requests:
+      cpu: 100m
+      memory: 100Mi
+  service:
+    additionalSpec: null
+    annotations: null
+    enabled: true
+    nodePort: null
+    port: 443
+    type: LoadBalancer
+  tolerations: null
+  wanAddress:
+    port: 443
+    source: Service
+    static: ""
+server:
+  affinity: |
+    podAntiAffinity:
+      requiredDuringSchedulingIgnoredDuringExecution:
+        - labelSelector:
+            matchLabels:
+              app: {{ template "consul.name" . }}
+              release: "{{ .Release.Name }}"
+              component: server
+          topologyKey: kubernetes.io/hostname
+  annotations: null
+  bootstrapExpect: 1
+  connect: true
+  disableFsGroupSecurityContext: false
+  disruptionBudget:
+    enabled: true
+    maxUnavailable: null
+  enabled: '-'
+  enterpriseLicense:
+    secretKey: null
+    secretName: null
+  extraConfig: |
+    {}
+  extraEnvironmentVars: {}
+  extraLabels: null
+  extraVolumes: []
+  image: null
+  nodeSelector: null
+  priorityClassName: ""
+  replicas: 1
+  resources:
+    limits:
+      cpu: 100m
+      memory: 100Mi
+    requests:
+      cpu: 100m
+      memory: 100Mi
+  service:
+    annotations: null
+  storage: 10Gi
+  storageClass: null
+  tolerations: ""
+  updatePartition: 0
+syncCatalog:
+  aclSyncToken:
+    secretKey: null
+    secretName: null
+  addK8SNamespaceSuffix: true
+  affinity: null
+  consulNamespaces:
+    consulDestinationNamespace: default
+    mirroringK8S: false
+    mirroringK8SPrefix: ""
+  consulPrefix: null
+  consulWriteInterval: null
+  default: true
+  enabled: false
+  image: null
+  k8sAllowNamespaces:
+  - '*'
+  k8sDenyNamespaces:
+  - kube-system
+  - kube-public
+  k8sPrefix: null
+  k8sSourceNamespace: null
+  k8sTag: null
+  logLevel: info
+  nodePortSyncType: ExternalFirst
+  nodeSelector: null
+  resources:
+    limits:
+      cpu: 50m
+      memory: 50Mi
+    requests:
+      cpu: 50m
+      memory: 50Mi
+  syncClusterIPServices: true
+  toConsul: true
+  toK8S: true
+  tolerations: null
+terminatingGateways:
+  defaults:
+    affinity: |
+      podAntiAffinity:
+        requiredDuringSchedulingIgnoredDuringExecution:
+          - labelSelector:
+              matchLabels:
+                app: {{ template "consul.name" . }}
+                release: "{{ .Release.Name }}"
+                component: terminating-gateway
+            topologyKey: kubernetes.io/hostname
+    annotations: null
+    consulNamespace: default
+    extraVolumes: []
+    initCopyConsulContainer:
+      resources:
+        limits:
+          cpu: 50m
+          memory: 150Mi
+        requests:
+          cpu: 50m
+          memory: 25Mi
+    nodeSelector: null
+    priorityClassName: ""
+    replicas: 2
+    resources:
+      limits:
+        cpu: 100m
+        memory: 100Mi
+      requests:
+        cpu: 100m
+        memory: 100Mi
+    tolerations: null
+  enabled: false
+  gateways:
+  - name: terminating-gateway
+tests:
+  enabled: true
+ui:
+  enabled: '-'
+  service:
+    additionalSpec: null
+    annotations: null
+    enabled: true
+    type: LoadBalancer
